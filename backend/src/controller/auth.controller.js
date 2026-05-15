@@ -108,4 +108,27 @@ async function Login(req, res) {
     }
 }
 
-module.exports = { Register, Login };
+async function Logout(req, res) {
+    try {
+        // check if we have any user
+        const token = req.cookies.Token;
+        if (!token) {
+            return res.status(400).json({
+                status: false,
+                message: "Bad Request, user not logged in.",
+            });
+        }
+
+        res.clearCookie();
+        return res
+            .status(200)
+            .json({ status: true, message: "Logged Out Successfully" });
+    } catch (err) {
+        console.error(err);
+        return res
+            .status(500)
+            .json({ status: false, message: "Internal Server Error" });
+    }
+}
+
+module.exports = { Register, Login, Logout };

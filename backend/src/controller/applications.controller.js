@@ -24,7 +24,7 @@ async function applyToJob(req, res) {
     }
 }
 
-async function getApplications(req, res) {
+async function getUserApplications(req, res) {
     try {
         const applications = await pool.query(
             "SELECT * FROM applications WHERE userid = $1",
@@ -82,4 +82,46 @@ async function getApplicationDetail(req, res) {
     }
 }
 
-module.exports = { applyToJob, getApplications, getApplicationDetail };
+// get applications for certain job (recruiter only)
+async function getApplicants(req, res) {
+    try {
+        const { jobid } = req.params;
+        const applicants = await pool.query(
+            `SELECT applications.id AS application_id,
+                users.id,
+                users.username,
+                users.email,
+                users.resume
+            FROM applications
+            JOIN users
+            ON applications.userid = users.id
+            WHERE applications.jobid = $1`,
+            [jobid],
+        );
+
+        // if no applicants are found
+        if (applicants.rows.lengh === 0) {
+            return res
+                .status(404)
+                .json({ status: false, message: "No Application Found" });
+        }
+
+        return res.status(200).json({
+            status: true,
+            message: "Applications Fetched Successfully",
+            data: applicants.rows,
+        });
+    } catch (err) {
+        console.error(err);
+        return res
+            .status(500)
+            .json({ status: false, message: "Internal Server Error" });
+    }
+}
+
+module.exports = {
+    applyToJob,
+    getUserApplications,
+    getApplicationDetail,
+    getApplicants,
+};

@@ -16,13 +16,19 @@ router.post(
 router.get(
     "/myapplications",
     authMiddleware.authUser,
-    applicationsController.getApplications,
+    applicationsController.getUserApplications,
 );
 
 router.get(
     "/applicationdetail/:jobid",
     authMiddleware.authUser,
     applicationsController.getApplicationDetail,
+);
+
+router.get(
+    "/applicants/:jobid",
+    authMiddleware.authRecruiter,
+    applicationsController.getApplicants,
 );
 
 module.exports = router;

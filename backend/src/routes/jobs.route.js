@@ -13,5 +13,15 @@ router.post(
 );
 
 router.get("/alljobs", jobController.getAllJobs);
+router.get(
+    "/myjobs",
+    authMiddleware.authRecruiter,
+    jobController.getRecruiterJobs,
+);
+router.patch(
+    "/job/:jobid/status",
+    authMiddleware.authRecruiter,
+    jobController.updateJobStatus,
+);
 
 module.exports = router;
