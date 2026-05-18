@@ -1,8 +1,9 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
     return (
-        <section className="min-h-screen w-full flex flex-col items-center py-14">
+        <section className="min-h-screen w-full flex flex-col items-center py-14 md:py-0">
             <div className="w-full min-h-screen max-w-6xl pt-16 px-4 flex items-center justify-center">
                 <form className="w-full max-w-md border border-(--border) shadow-md py-8 px-4 rounded-3xl flex flex-col gap-4 transition-all duration-300">
                     <div className="w-full">
@@ -70,7 +71,10 @@ const Register = () => {
                     <div className="w-full">
                         <p className="text-sm text-(--text)">
                             Already have an account?&nbsp;
-                            <a className="text-(--heading) hover:text-(--text) font-semibold cursor-pointer">
+                            <a
+                                onClick={() => navigate("/login")}
+                                className="text-(--heading) hover:text-(--text) font-semibold cursor-pointer"
+                            >
                                 Login here
                             </a>
                         </p>
@@ -84,6 +88,9 @@ const Register = () => {
                         </button>
                         <button
                             type="button"
+                            onClick={() => {
+                                navigate("/");
+                            }}
                             className="bg-(--secondary) hover:bg-(--secondary-hover) border border-(--border) text-black font-medium text-base rounded-xl p-2.5 cursor-pointer"
                         >
                             Cancel

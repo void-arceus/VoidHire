@@ -1,6 +1,7 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+    const navigate = useNavigate();
     return (
         <main className="w-full h-screen pt-12">
             {/*  hero sectino */}
@@ -32,11 +33,21 @@ const LandingPage = () => {
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-                            <button className="w-full sm:w-fit px-5 py-2.5 rounded-xl bg-(--primary) hover:bg-(--primary-hover) text-sm font-medium text-white/95 transition-all duration-200 hover:shadow-md cursor-pointer">
+                            <button
+                                onClick={() => {
+                                    navigate("/register");
+                                }}
+                                className="w-full sm:w-fit px-5 py-2.5 rounded-xl bg-(--primary) hover:bg-(--primary-hover) text-sm font-medium text-white/95 transition-all duration-200 hover:shadow-md cursor-pointer"
+                            >
                                 Get Started
                             </button>
 
-                            <button className="w-full sm:w-fit px-5 py-2.5 rounded-xl border border-(--border) bg-white hover:bg-(--secondary) text-sm font-medium text-(--heading) transition-all duration-200 cursor-pointer">
+                            <button
+                                onClick={() => {
+                                    navigate("/jobs");
+                                }}
+                                className="w-full sm:w-fit px-5 py-2.5 rounded-xl border border-(--border) bg-white hover:bg-(--secondary) text-sm font-medium text-(--heading) transition-all duration-200 cursor-pointer"
+                            >
                                 Explore Jobs
                             </button>
                         </div>

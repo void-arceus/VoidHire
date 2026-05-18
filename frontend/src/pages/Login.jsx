@@ -1,6 +1,7 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
     return (
         <section className="min-h-screen w-full flex flex-col items-center">
             <div className="w-full min-h-screen max-w-6xl pt-16 px-4 flex items-center justify-center">
@@ -35,7 +36,12 @@ const Login = () => {
                     <div className="w-full flex flex-col gap-2">
                         <p className="text-sm text-(--text)">
                             Don't have an account?&nbsp;
-                            <a className="text-(--heading) hover:text-(--text) font-semibold cursor-pointer">
+                            <a
+                                onClick={() => {
+                                    navigate("/register");
+                                }}
+                                className="text-(--heading) hover:text-(--text) font-semibold cursor-pointer"
+                            >
                                 Create New
                             </a>
                         </p>
@@ -53,6 +59,9 @@ const Login = () => {
                         </button>
                         <button
                             type="button"
+                            onClick={() => {
+                                navigate("/");
+                            }}
                             className="bg-(--secondary) hover:bg-(--secondary-hover) border border-(--border) text-black font-medium text-base rounded-xl p-2.5 cursor-pointer"
                         >
                             Cancel
