@@ -1,13 +1,23 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { logoutUser as logoutUserAPI } from "../api/auth.api";
 
 const Navbar = () => {
-    // dummy isloggedIN
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const [isRecruiter, setIsRecruiter] = useState(true);
-
     const navigate = useNavigate();
+    const { isLoggedIn, logoutUser, role, userData } = useAuth();
+
+    async function handleLogoutUser() {
+        try {
+            const result = await logoutUserAPI();
+            if (result.status === 200) {
+                logoutUser();
+                navigate("/");
+            }
+        } catch (err) {
+            // later show error toaster
+        }
+    }
 
     return (
         <nav className="fixed top-0 left-0 z-50 w-full border-b border-(--border) bg-(--navbar) backdrop-blur-xl">
@@ -37,7 +47,7 @@ const Navbar = () => {
                 {/* Navigation Actions */}
                 {isLoggedIn ? (
                     // if recruiter
-                    isRecruiter ? (
+                    role === "recruiter" ? (
                         <div className="flex">
                             <ul className="flex items-center gap-6">
                                 <li className="text-sm text-(--text) font-semibold cursor-pointer hover:text-(--primary) transition-all duration-200">
@@ -55,7 +65,42 @@ const Navbar = () => {
                             </ul>
                         </div>
                     ) : (
-                        <div></div>
+                        <div className="flex">
+                            <ul className="flex items-center gap-6">
+                                <li
+                                    onClick={() => {
+                                        navigate("/userDashboard");
+                                    }}
+                                    className="text-sm text-(--text) font-semibold cursor-pointer hover:text-(--primary) transition-all duration-200"
+                                >
+                                    Dashboard
+                                </li>
+                                <li
+                                    onClick={() => {
+                                        navigate("/jobs");
+                                    }}
+                                    className="text-sm text-(--text) font-semibold cursor-pointer hover:text-(--primary) transition-all duration-200"
+                                >
+                                    Jobs
+                                </li>
+                                <li
+                                    onClick={() => {
+                                        navigate("/userApplications");
+                                    }}
+                                    className="text-sm text-(--text) font-semibold cursor-pointer hover:text-(--primary) transition-all duration-200"
+                                >
+                                    My Applications
+                                </li>
+                                <li
+                                    onClick={() => {
+                                        navigate("/savedJobs");
+                                    }}
+                                    className="text-sm text-(--text) font-semibold cursor-pointer hover:text-(--primary) transition-all duration-200"
+                                >
+                                    Saved Jobs
+                                </li>
+                            </ul>
+                        </div>
                     )
                 ) : (
                     <div className="flex items-center gap-3">
@@ -80,11 +125,14 @@ const Navbar = () => {
                 )}
                 {isLoggedIn ? (
                     <div className="flex items-center gap-4">
-                        <button className="bg-(--secondary) px-4 py-2.5 rounded-xl text-sm hover:bg-(--secondary-hover) font-semibold text-(--text) cursor-pointer transition-all duration-200">
+                        <button
+                            onClick={handleLogoutUser}
+                            className="bg-(--secondary) px-4 py-2.5 rounded-xl text-sm hover:bg-(--secondary-hover) font-semibold text-(--text) cursor-pointer transition-all duration-200"
+                        >
                             Logout
                         </button>
                         <div className="bg-(--primary) w-10 h-10 flex items-center justify-center rounded-xl font-semibold text-white/95 shadow-md hover:shadow-lg cursor-pointer hover:bg-(--primary-hover) transition-all duration-200">
-                            A
+                            {userData.username[0].toUpperCase()}
                         </div>
                     </div>
                 ) : null}

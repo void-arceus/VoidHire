@@ -9,8 +9,8 @@ router.post(
     authMiddleware.RegisterValidation,
     authController.Register,
 );
-
 router.post("/login", authController.Login);
 router.post("/logout", authController.Logout);
+router.get("/me", authController.Me);
 
 module.exports = router;
