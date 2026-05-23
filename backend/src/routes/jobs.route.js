@@ -23,5 +23,7 @@ router.patch(
     authMiddleware.authRecruiter,
     jobController.updateJobStatus,
 );
+router.post("/savejob", authMiddleware.authUser, jobController.saveJob);
+router.get("/savedjobs", authMiddleware.authUser, jobController.getSavedJobs);
 
 module.exports = router;
