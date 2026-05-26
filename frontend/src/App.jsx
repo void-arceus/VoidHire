@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import Login from "./pages/authPages/Login";
 import Register from "./pages/authPages/Register";
 import RecruiterDashboard from "./pages/recruiterPages/RecruiterDashboard";
+import CreateJobForm from "./pages/recruiterPages/CreateJobForm";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Jobs from "./pages/Jobs";
@@ -20,34 +21,44 @@ import { AuthProvider } from "./context/AuthContext";
 axios.defaults.withCredentials = true;
 
 const App = () => {
-  return (
-    <>
-      <AuthProvider>
-        <Router>
-          <Routes>
-            <Route element={<MainLayout />}>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/jobs" element={<Jobs />} />
+    return (
+        <>
+            <AuthProvider>
+                <Router>
+                    <Routes>
+                        <Route element={<MainLayout />}>
+                            <Route path="/" element={<LandingPage />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/jobs" element={<Jobs />} />
 
-              {/* recruiter's routes */}
-              <Route
-                path="recruiterDashboard"
-                element={<RecruiterDashboard />}
-              />
+                            {/* recruiter's routes */}
+                            <Route
+                                path="recruiterDashboard"
+                                element={<RecruiterDashboard />}
+                            />
 
-              {/* user's routes */}
-              <Route path="/userDashboard" element={<UserDashboard />} />
-              <Route path="/userApplications" element={<UserApplications />} />
-              <Route path="/savedJobs" element={<SavedJobs />} />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </>
-  );
+                            {/* user's routes */}
+                            <Route
+                                path="/userDashboard"
+                                element={<UserDashboard />}
+                            />
+                            <Route
+                                path="/userApplications"
+                                element={<UserApplications />}
+                            />
+                            <Route path="/savedJobs" element={<SavedJobs />} />
+                            <Route path="/profile" element={<Profile />} />
+                            <Route
+                                path="/createJobForm"
+                                element={<CreateJobForm />}
+                            />
+                        </Route>
+                    </Routes>
+                </Router>
+            </AuthProvider>
+        </>
+    );
 };
 
 export default App;

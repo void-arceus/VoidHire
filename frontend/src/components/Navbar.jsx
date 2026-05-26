@@ -59,7 +59,13 @@ const Navbar = () => {
                                 <li className="text-sm text-(--text) font-semibold cursor-pointer hover:text-(--primary) transition-all duration-200">
                                     Applicants
                                 </li>
-                                <button className="text-sm bg-(--primary) hover:bg-(--primary-hover) px-4 py-2 rounded-xl text-white/95 font-medium cursor-pointer shadow-sm hover:shadow-md transition-all duration-200">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        navigate("/createJobForm");
+                                    }}
+                                    className="text-sm bg-(--primary) hover:bg-(--primary-hover) px-4 py-2 rounded-xl text-white/95 font-medium cursor-pointer shadow-sm hover:shadow-md transition-all duration-200"
+                                >
                                     Post Job
                                 </button>
                             </ul>
