@@ -23,6 +23,16 @@ const Jobs = () => {
         }
     }
 
+    async function getJobDetails(id) {
+        try {
+            const result = await getJobs(id);
+            console.log("Job Details: ", result.data.data);
+        } catch (err) {
+            console.error(err);
+            return;
+        }
+    }
+
     return (
         <main className="min-h-screen w-full pt-17 flex flex-col items-center">
             <div className="w-full max-w-6xl flex flex-col items-center px-4">
@@ -51,160 +61,64 @@ const Jobs = () => {
                     {jobData ? (
                         <div className="w-full flex flex-col items-center gap-6 pb-10">
                             {/* job card */}
-                            <div className="w-full max-w-3xl border border-(--border) rounded-2xl p-6 bg-white shadow-sm hover:shadow-md transition-all duration-200">
-                                <div className="flex flex-col gap-5">
-                                    {/* Top Section */}
-                                    <div className="flex flex-col space-y-1">
-                                        <h1 className="text-2xl font-semibold text-(--heading)">
-                                            Backend Developer
-                                        </h1>
+                            {jobData.map((job) => (
+                                <div
+                                    key={job.id}
+                                    className="w-full max-w-3xl border border-(--border) rounded-2xl p-6 bg-white shadow-sm hover:shadow-md transition-all duration-200"
+                                >
+                                    <div className="flex flex-col gap-5">
+                                        {/* Top Section */}
+                                        <div className="flex flex-col space-y-1">
+                                            <h1 className="text-2xl font-semibold text-(--heading)">
+                                                {job.jobtitle}
+                                            </h1>
 
-                                        <p className="text-sm tracking-wide text-(--text)">
-                                            Void Technologies
+                                            <p className="text-sm tracking-wide text-(--text)">
+                                                {job.companyname}
+                                            </p>
+                                        </div>
+                                        {/* Metadata */}
+                                        <div className="flex flex-wrap items-center gap-2 text-sm text-(--text)">
+                                            <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
+                                                {job.location}
+                                            </span>
+
+                                            <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
+                                                {job.salary}
+                                            </span>
+
+                                            <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
+                                                {job.experience}
+                                            </span>
+                                        </div>
+                                        {/* Description */}
+                                        <p className="text-sm leading-6 text-(--text) line-clamp-3">
+                                            {job.jobdescription}
                                         </p>
-                                    </div>
-
-                                    {/* Metadata */}
-                                    <div className="flex flex-wrap items-center gap-2 text-sm text-(--text)">
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            Remote
-                                        </span>
-
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            ₹12 LPA
-                                        </span>
-
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            2+ Years Experience
-                                        </span>
-                                    </div>
-
-                                    {/* Description */}
-                                    <p className="text-sm leading-6 text-(--text) line-clamp-3">
-                                        We are looking for a frontend developer
-                                        with strong React and Tailwind CSS
-                                        skills to help build clean, scalable and
-                                        modern interfaces for our hiring
-                                        platform.
-                                    </p>
-
-                                    {/* Bottom Section */}
-                                    <div className="flex items-center justify-between pt-2">
-                                        <button className="text-sm text-(--text) hover:text-(--heading) cursor-pointer transition-colors duration-200">
-                                            Save Job
-                                        </button>
-
-                                        <div className="flex items-center gap-2">
-                                            <button className="bg-(--secondary) hover:bg-(--secondary-hover) px-3 py-2 rounded-xl text-(--text) text-sm font-medium hover:cursor-pointer transition-all duration-200s">
-                                                View Details
+                                        {/* Bottom Section */}
+                                        <div className="flex items-center justify-between pt-2">
+                                            <button className="text-sm text-(--text) hover:text-(--heading) cursor-pointer transition-colors duration-200">
+                                                Save Job
                                             </button>
-                                            <button className="bg-(--primary) hover:bg-(--primary-hover) text-white px-3 py-2 rounded-xl text-sm font-medium shadow-sm hover:shadow-md hover:cursor-pointer transition-all duration-200">
-                                                Apply Now
-                                            </button>
+
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        getJobDetails(job.id);
+                                                    }}
+                                                    className="bg-(--secondary) hover:bg-(--secondary-hover) px-3 py-2 rounded-xl text-(--text) text-sm font-medium hover:cursor-pointer transition-all duration-200s"
+                                                >
+                                                    View Details
+                                                </button>
+                                                <button className="bg-(--primary) hover:bg-(--primary-hover) text-white px-3 py-2 rounded-xl text-sm font-medium shadow-sm hover:shadow-md hover:cursor-pointer transition-all duration-200">
+                                                    Apply Now
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="w-full max-w-3xl border border-(--border) rounded-3xl p-6 bg-white shadow-sm hover:shadow-md transition-all duration-200">
-                                <div className="flex flex-col gap-5">
-                                    {/* Top Section */}
-                                    <div className="flex flex-col space-y-1">
-                                        <h1 className="text-2xl font-semibold text-(--heading)">
-                                            Full Stack Developer
-                                        </h1>
-
-                                        <p className="text-sm tracking-wide text-(--text)">
-                                            Void Technologies
-                                        </p>
-                                    </div>
-
-                                    {/* Metadata */}
-                                    <div className="flex flex-wrap items-center gap-2 text-sm text-(--text)">
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            Remote
-                                        </span>
-
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            ₹12 LPA
-                                        </span>
-
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            2+ Years Experience
-                                        </span>
-                                    </div>
-
-                                    {/* Description */}
-                                    <p className="text-sm leading-6 text-(--text) line-clamp-3">
-                                        We are looking for a frontend developer
-                                        with strong React and Tailwind CSS
-                                        skills to help build clean, scalable and
-                                        modern interfaces for our hiring
-                                        platform.
-                                    </p>
-
-                                    {/* Bottom Section */}
-                                    <div className="flex items-center justify-between pt-2">
-                                        <button className="text-sm text-(--text) hover:text-(--heading) transition-colors duration-200">
-                                            Save Job
-                                        </button>
-
-                                        <button className="bg-(--primary) hover:bg-(--primary-hover) text-white px-5 py-2 rounded-xl text-sm font-medium shadow-sm hover:shadow-md  hover:cursor-pointer transition-all duration-200">
-                                            Apply Now
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="w-full max-w-3xl border border-(--border) rounded-3xl p-6 bg-white shadow-sm hover:shadow-md transition-all duration-200">
-                                <div className="flex flex-col gap-5">
-                                    {/* Top Section */}
-                                    <div className="flex flex-col space-y-1">
-                                        <h1 className="text-2xl font-semibold text-(--heading)">
-                                            Frontend Developer
-                                        </h1>
-
-                                        <p className="text-sm tracking-wide text-(--text)">
-                                            Void Technologies
-                                        </p>
-                                    </div>
-
-                                    {/* Metadata */}
-                                    <div className="flex flex-wrap items-center gap-2 text-sm text-(--text)">
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            Remote
-                                        </span>
-
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            ₹12 LPA
-                                        </span>
-
-                                        <span className="px-3 py-1 rounded-full bg-(--secondary-hover)">
-                                            2+ Years Experience
-                                        </span>
-                                    </div>
-
-                                    {/* Description */}
-                                    <p className="text-sm leading-6 text-(--text) line-clamp-3">
-                                        We are looking for a frontend developer
-                                        with strong React and Tailwind CSS
-                                        skills to help build clean, scalable and
-                                        modern interfaces for our hiring
-                                        platform.
-                                    </p>
-
-                                    {/* Bottom Section */}
-                                    <div className="flex items-center justify-between pt-2">
-                                        <button className="text-sm text-(--text) hover:text-(--heading) transition-colors duration-200">
-                                            Save Job
-                                        </button>
-
-                                        <button className="bg-(--primary) hover:bg-(--primary-hover) text-white px-5 py-2 rounded-xl text-sm font-medium shadow-sm hover:shadow-md hover:cursor-pointer transition-all duration-200">
-                                            Apply Now
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     ) : (
                         <div>Loading...</div>

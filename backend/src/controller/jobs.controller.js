@@ -6,23 +6,22 @@ async function PostJob(req, res) {
         const {
             companyname,
             jobtitle,
-            createdat,
             location,
             salary,
             aboutcompany,
             jobdescription,
             requirements,
+            skills,
             responsibilities,
             perks,
             experience,
         } = jobdata;
 
         const job = await pool.query(
-            "INSERT INTO Jobs(companyname, jobtitle, createdat, location, salary, aboutcompany, jobdescription, requirements, responsibilities, perks, experience, recruiterid) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
+            "INSERT INTO Jobs(companyname, jobtitle, location, salary, aboutcompany, jobdescription, requirements, responsibilities, perks, experience, skills, recruiterid) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
             [
                 companyname,
                 jobtitle,
-                createdat,
                 location,
                 salary,
                 aboutcompany,
@@ -31,6 +30,7 @@ async function PostJob(req, res) {
                 responsibilities,
                 perks,
                 experience,
+                skills,
                 req.user.id,
             ],
         );
@@ -49,10 +49,28 @@ async function PostJob(req, res) {
 
 async function getAllJobs(req, res) {
     try {
+        const jobid = req.query.jobid;
+        console.log("Job id: ", jobid);
+        if (jobid) {
+            const job = await pool.query("SELECT * FROM jobs WHERE id = $1", [
+                jobid,
+            ]);
+            if (job.rows.length === 0) {
+                return res.status(404).json({
+                    status: false,
+                    message: "Job Details not found",
+                });
+            }
+            return res.status(200).json({
+                status: true,
+                message: "Jobs Details Fetched successfully",
+                data: job.rows,
+            });
+        }
+
         const jobsData = await pool.query(
             "SELECT * FROM jobs WHERE jobstatus='active'",
         );
-
         if (jobsData.rows.length === 0) {
             return res
                 .status(404)

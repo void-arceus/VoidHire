@@ -1,12 +1,13 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/authPages/Login";
 import Register from "./pages/authPages/Register";
 import RecruiterDashboard from "./pages/recruiterPages/RecruiterDashboard";
 import CreateJobForm from "./pages/recruiterPages/CreateJobForm";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Jobs from "./pages/Jobs";
+import JobDetailPage from "./pages/JobDetailPage";
 import axios from "axios";
 
 // users
@@ -37,6 +38,10 @@ const App = () => {
                                 path="recruiterDashboard"
                                 element={<RecruiterDashboard />}
                             />
+                            <Route
+                                path="/createJobForm"
+                                element={<CreateJobForm />}
+                            />
 
                             {/* user's routes */}
                             <Route
@@ -49,9 +54,10 @@ const App = () => {
                             />
                             <Route path="/savedJobs" element={<SavedJobs />} />
                             <Route path="/profile" element={<Profile />} />
+
                             <Route
-                                path="/createJobForm"
-                                element={<CreateJobForm />}
+                                path="jobdetail"
+                                element={<JobDetailPage />}
                             />
                         </Route>
                     </Routes>
