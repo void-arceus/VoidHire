@@ -13,3 +13,15 @@ export async function getUserApplications(userid) {
         console.error(err);
     }
 }
+
+export async function apply(jobid) {
+    try {
+        const result = await axios.post(`${BASE_URL}/applications/apply`, {
+            applicationData: { jobid },
+        });
+        return result;
+    } catch (err) {
+        console.error(err);
+        return err;
+    }
+}

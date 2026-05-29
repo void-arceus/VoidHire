@@ -15,6 +15,7 @@ import UserDashboard from "./pages/userPages/UserDashboard";
 import UserApplications from "./pages/userPages/UserApplications";
 import SavedJobs from "./pages/userPages/SavedJobs";
 import Profile from "./pages/userPages/Profile";
+import ApplicationDetail from "./pages/userPages/ApplicationDetail";
 
 // context api's
 import { AuthProvider } from "./context/AuthContext";
@@ -52,11 +53,15 @@ const App = () => {
                                 path="/userApplications"
                                 element={<UserApplications />}
                             />
+                            <Route
+                                path="/applicationDetail"
+                                element={<ApplicationDetail />}
+                            />
                             <Route path="/savedJobs" element={<SavedJobs />} />
                             <Route path="/profile" element={<Profile />} />
 
                             <Route
-                                path="jobdetail"
+                                path="jobdetail/:jobid"
                                 element={<JobDetailPage />}
                             />
                         </Route>

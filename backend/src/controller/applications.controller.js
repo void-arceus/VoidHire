@@ -24,10 +24,11 @@ async function applyToJob(req, res) {
     }
 }
 
+// get user applications with full job details user have applied to
 async function getUserApplications(req, res) {
     try {
         const applications = await pool.query(
-            "SELECT * FROM applications WHERE userid = $1",
+            "SELECT * FROM applications JOIN jobs ON applications.jobid = jobs.id WHERE applications.userid = $1",
             [req.user.id],
         );
         if (applications.rows.length === 0) {

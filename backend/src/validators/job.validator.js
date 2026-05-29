@@ -22,7 +22,7 @@ function validateJobData(jobData) {
         return { status: false, message: "Salary range is required" };
     if (!aboutcompany || aboutcompany.trim() === "")
         return { status: false, message: "About company is required" };
-    if (!jobdescription || jobdescription.trim() === "")
+    if (jobdescription.length === 0)
         return { status: false, message: "Job Description is required" };
     if (requirements.length === 0)
         return { status: false, message: "Requirements are required" };

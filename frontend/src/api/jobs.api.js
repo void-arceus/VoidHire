@@ -40,8 +40,6 @@ export async function getSavedJobs() {
 
 export async function postJob(jobdata) {
     try {
-        // call the post job api here
-        console.log("I am here");
         const res = await axios.post(`${BASE_URL}/jobs/postjob`, {
             jobdata: jobdata,
         });

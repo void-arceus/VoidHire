@@ -20,12 +20,6 @@ router.get(
 );
 
 router.get(
-    "/applicationdetail/:jobid",
-    authMiddleware.authUser,
-    applicationsController.getApplicationDetail,
-);
-
-router.get(
     "/applicants/:jobid",
     authMiddleware.authRecruiter,
     applicationsController.getApplicants,

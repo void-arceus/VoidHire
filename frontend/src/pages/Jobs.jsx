@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { getJobs } from "../api/jobs.api";
+import { useNavigate } from "react-router-dom";
 
 const Jobs = () => {
     const [jobData, setJobData] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchJobs();
@@ -12,7 +14,6 @@ const Jobs = () => {
         try {
             const result = await getJobs();
             if (result.status === 200) {
-                console.log("Jobs:", result.data.data);
                 setJobData(result.data.data);
             } else {
                 setJobData(null);
@@ -20,16 +21,6 @@ const Jobs = () => {
         } catch (err) {
             console.log(err);
             // later i'll add toaster message
-        }
-    }
-
-    async function getJobDetails(id) {
-        try {
-            const result = await getJobs(id);
-            console.log("Job Details: ", result.data.data);
-        } catch (err) {
-            console.error(err);
-            return;
         }
     }
 
@@ -54,7 +45,6 @@ const Jobs = () => {
                         Search
                     </button>
                 </div>
-
                 {/* jobs div */}
                 <div className="w-full">
                     {/* job card for testing */}
@@ -105,7 +95,9 @@ const Jobs = () => {
                                                 <button
                                                     type="button"
                                                     onClick={() => {
-                                                        getJobDetails(job.id);
+                                                        navigate(
+                                                            `/jobdetail/${job.id}`,
+                                                        );
                                                     }}
                                                     className="bg-(--secondary) hover:bg-(--secondary-hover) px-3 py-2 rounded-xl text-(--text) text-sm font-medium hover:cursor-pointer transition-all duration-200s"
                                                 >
@@ -121,7 +113,11 @@ const Jobs = () => {
                             ))}
                         </div>
                     ) : (
-                        <div>Loading...</div>
+                        <div className="w-full flex items-center justify-center">
+                            <h1 className="text-2xl text-shadow-lg font-bold text-(--error)">
+                                No jobs were found
+                            </h1>
+                        </div>
                     )}
                 </div>
             </div>

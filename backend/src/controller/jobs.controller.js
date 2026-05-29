@@ -50,7 +50,6 @@ async function PostJob(req, res) {
 async function getAllJobs(req, res) {
     try {
         const jobid = req.query.jobid;
-        console.log("Job id: ", jobid);
         if (jobid) {
             const job = await pool.query("SELECT * FROM jobs WHERE id = $1", [
                 jobid,

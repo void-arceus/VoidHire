@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { postJob } from "../../api/jobs.api";
+import { data } from "react-router-dom";
 
 const CreateJobForm = () => {
     const [skillArr, setSkillArr] = useState([]);
@@ -13,7 +14,14 @@ const CreateJobForm = () => {
             const formData = new FormData(e.target);
             const dataObj = Object.fromEntries(formData.entries());
             dataObj.skills = skillArr;
-            console.log("Form data:", dataObj);
+
+            // convert textarea inputs into array of strings
+            dataObj.requirements = dataObj.requirements.split("\n");
+            dataObj.perks = dataObj.perks.split("\n");
+            dataObj.responsibilities = dataObj.responsibilities.split("\n");
+            dataObj.jobdescription = dataObj.jobdescription.split("\n");
+
+            console.log("Form Data: ", dataObj);
 
             const result = await postJob(dataObj);
             if (result.status === 201) {
