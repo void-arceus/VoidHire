@@ -13,6 +13,8 @@ router.post(
 );
 
 router.get("/alljobs", jobController.getAllJobs);
+
+// get recruiter jobs
 router.get(
     "/myjobs",
     authMiddleware.authRecruiter,

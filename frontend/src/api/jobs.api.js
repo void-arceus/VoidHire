@@ -18,9 +18,9 @@ export async function getJobs(id) {
     }
 }
 
-export async function saveJob() {
+export async function saveJob(jobid) {
     try {
-        const res = axios.post(`${BASE_URL}/jobs/savejob`, { jobId });
+        const res = axios.post(`${BASE_URL}/jobs/savejob`, { jobid });
         return res;
     } catch (err) {
         console.error(err);
