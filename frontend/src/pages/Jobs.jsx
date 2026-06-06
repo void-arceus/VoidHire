@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { getJobs, saveJob } from "../api/jobs.api";
+import { apply } from "../api/applications.api";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../context/ToastContest";
 import Loading from "../Animations/Loading";
 
 const Jobs = () => {
     const [jobData, setJobData] = useState(null);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    const { showToast } = useToast();
 
     useEffect(() => {
         fetchJobs();
@@ -32,15 +35,31 @@ const Jobs = () => {
 
     async function handleSaveJob(jobid) {
         try {
-            setLoading(true);
             const result = await saveJob(jobid);
-            console.log(result.data);
+            const message =
+                result.data.data.message || "Job Saved Successfully";
+            showToast(message, "success");
         } catch (err) {
-            setLoading(false);
-            console.error(err);
+            const message = err.response.data.message || "Something went wrong";
+            showToast(message, "error");
             return;
-        } finally {
-            setLoading(false);
+        }
+    }
+
+    async function handleApplyToJob(jobid) {
+        try {
+            const result = await apply(jobid);
+            if (result.status === 201 || result.status === 200) {
+                const message = result.data.data.data.message;
+                showToast(message, "success");
+            } else {
+                const message =
+                    result.response.data.message || "Something went wrong";
+                showToast(message, "error");
+            }
+        } catch (err) {
+            showToast("Something went wrong", "error");
+            return;
         }
     }
 
@@ -134,7 +153,15 @@ const Jobs = () => {
                                                     >
                                                         View Details
                                                     </button>
-                                                    <button className="bg-(--primary) hover:bg-(--primary-hover) text-white px-3 py-2 rounded-xl text-sm font-medium shadow-sm hover:shadow-md hover:cursor-pointer transition-all duration-200">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            handleApplyToJob(
+                                                                job.id,
+                                                            );
+                                                        }}
+                                                        className="bg-(--primary) hover:bg-(--primary-hover) text-white px-3 py-2 rounded-xl text-sm font-medium shadow-sm hover:shadow-md hover:cursor-pointer transition-all duration-200"
+                                                    >
                                                         Apply Now
                                                     </button>
                                                 </div>

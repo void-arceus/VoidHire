@@ -23,7 +23,6 @@ export async function saveJob(jobid) {
         const res = axios.post(`${BASE_URL}/jobs/savejob`, { jobid });
         return res;
     } catch (err) {
-        console.error(err);
         return err;
     }
 }

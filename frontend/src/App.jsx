@@ -9,6 +9,7 @@ import MainLayout from "./layouts/MainLayout";
 import Jobs from "./pages/Jobs";
 import JobDetailPage from "./pages/JobDetailPage";
 import axios from "axios";
+import Toaster from "./Animations/Toaster";
 
 // users
 import UserDashboard from "./pages/userPages/UserDashboard";
@@ -19,55 +20,65 @@ import ApplicationDetail from "./pages/userPages/ApplicationDetail";
 
 // context api's
 import { AuthProvider } from "./context/AuthContext";
+import { ToastProvider } from "./context/ToastContest";
 
 axios.defaults.withCredentials = true;
 
 const App = () => {
     return (
         <>
-            <AuthProvider>
-                <Router>
-                    <Routes>
-                        <Route element={<MainLayout />}>
-                            <Route path="/" element={<LandingPage />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/jobs" element={<Jobs />} />
+            <ToastProvider>
+                <Toaster />
+                <AuthProvider>
+                    <Router>
+                        <Routes>
+                            <Route element={<MainLayout />}>
+                                <Route path="/" element={<LandingPage />} />
+                                <Route path="/login" element={<Login />} />
+                                <Route
+                                    path="/register"
+                                    element={<Register />}
+                                />
+                                <Route path="/jobs" element={<Jobs />} />
 
-                            {/* recruiter's routes */}
-                            <Route
-                                path="recruiterDashboard"
-                                element={<RecruiterDashboard />}
-                            />
-                            <Route
-                                path="/createJobForm"
-                                element={<CreateJobForm />}
-                            />
+                                {/* recruiter's routes */}
+                                <Route
+                                    path="recruiterDashboard"
+                                    element={<RecruiterDashboard />}
+                                />
+                                <Route
+                                    path="/createJobForm"
+                                    element={<CreateJobForm />}
+                                />
 
-                            {/* user's routes */}
-                            <Route
-                                path="/userDashboard"
-                                element={<UserDashboard />}
-                            />
-                            <Route
-                                path="/userApplications"
-                                element={<UserApplications />}
-                            />
-                            <Route
-                                path="/applicationDetail"
-                                element={<ApplicationDetail />}
-                            />
-                            <Route path="/savedJobs" element={<SavedJobs />} />
-                            <Route path="/profile" element={<Profile />} />
+                                {/* user's routes */}
+                                <Route
+                                    path="/userDashboard"
+                                    element={<UserDashboard />}
+                                />
+                                <Route
+                                    path="/userApplications"
+                                    element={<UserApplications />}
+                                />
+                                <Route
+                                    path="/applicationDetail"
+                                    element={<ApplicationDetail />}
+                                />
+                                <Route
+                                    path="/savedJobs"
+                                    element={<SavedJobs />}
+                                />
+                                <Route path="/profile" element={<Profile />} />
 
-                            <Route
-                                path="jobdetail/:jobid"
-                                element={<JobDetailPage />}
-                            />
-                        </Route>
-                    </Routes>
-                </Router>
-            </AuthProvider>
+                                <Route
+                                    path="jobdetail/:jobid"
+                                    element={<JobDetailPage />}
+                                />
+                            </Route>
+                        </Routes>
+                    </Router>
+                </AuthProvider>
+            </ToastProvider>
         </>
     );
 };

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Toaster from "../Animations/Toaster";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -10,6 +11,9 @@ const LandingPage = () => {
                 <div className="absolute top-0 right-0 w-72 h-72 bg-(--primary)/10 blur-3xl rounded-full"></div>
 
                 <div className="relative w-full max-w-6xl mx-auto px-4 py-24 flex flex-col items-center justify-center gap-10 text-center">
+                    {/* testing toaster */}
+                    <Toaster />
+
                     <div className="w-full max-w-3xl flex flex-col items-center gap-5">
                         <div className="px-4 py-1.5 rounded-full border border-(--border) bg-white shadow-sm">
                             <p className="text-xs font-medium text-(--text)">

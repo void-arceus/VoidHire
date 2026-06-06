@@ -189,7 +189,7 @@ async function saveJob(req, res) {
         if (err.code === "23505") {
             return res.status(409).json({
                 status: false,
-                message: "You've already saved this job.",
+                message: "Job already saved",
             });
         }
         return res
